@@ -11,7 +11,7 @@ Client.prototype.init = function (token) {
   this.token = token
   this.request = request.defaults({
     baseUrl: config.baseUrl,
-    qs: {'remember_token': this.token},
+    auth: {'bearer': this.token},
     transform: function (response) {
       return JSON.parse(response)
     }
@@ -32,7 +32,7 @@ Client.prototype.login = function (username, password) {
     }
   }
   return request.post(opts).then(function(data) {
-    self.init(data.remember_token)
+    self.init(data.token)
     return data
   })
 }
