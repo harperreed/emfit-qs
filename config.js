@@ -1,4 +1,4 @@
-var baseUrl = 'https://api-qs.emfit.com'
+var baseUrl = 'https://qs-api.emfit.com'
 module.exports = {
   baseUrl: baseUrl,
 }

@@ -11,7 +11,7 @@ Client.prototype.init = function (token) {
   this.token = token
   this.request = request.defaults({
     baseUrl: config.baseUrl,
-    qs: {'remember_token': this.token},
+    auth: {'bearer': this.token},
     transform: function (response) {
       return JSON.parse(response)
     }
@@ -32,7 +32,7 @@ Client.prototype.login = function (username, password) {
     }
   }
   return request.post(opts).then(function(data) {
-    self.init(data.remember_token)
+    self.init(data.token)
     return data
   })
 }
@@ -62,9 +62,9 @@ Client.prototype.statuses = function () {
 }
 
 Client.prototype.latest = function (deviceId, apiVersion) {
-  if (!apiVersion) apiVersion = 4
+  if (!apiVersion) apiVersion = 1
   var url = '/v' + apiVersion + '/presence/' + deviceId + '/latest'
-  if (apiVersion == 1) url = '/api/v1/presence/latest/' + deviceId
+  if (apiVersion == 1) url = '/api/v1/presence/' + deviceId + '/latest'
   return this.request.get(url)
 }
 
